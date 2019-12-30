@@ -26,10 +26,6 @@
             <groupId>com.grozacloud</groupId>
             <artifactId>famas-core</artifactId>
         </dependency>
-        <dependency>
-            <groupId>io.netty</groupId>
-            <artifactId>netty-all</artifactId>
-        </dependency>
     </dependencies>
 
 
