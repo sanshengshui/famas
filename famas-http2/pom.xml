@@ -11,5 +11,9 @@
     <name>Famas :: Http2</name>
     <artifactId>famas-http2</artifactId>
 
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
 
 </project>
