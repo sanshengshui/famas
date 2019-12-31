@@ -28,7 +28,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <netty.version>4.1.43.Final</netty.version>
-        <sofa.common.tools>1.0.12</sofa.common.tools>
+        <slf4j.version>1.7.21</slf4j.version>
+        <junit.version>4.11</junit.version>
     </properties>
 
     <dependencyManagement>
@@ -49,12 +50,33 @@
                 <version>${netty.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.alipay.sofa.common</groupId>
-                <artifactId>sofa-common-tools</artifactId>
-                <version>${sofa.common.tools}</version>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <repositories>
+        <repository>
+            <id>maven-ali</id>
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+                <checksumPolicy>fail</checksumPolicy>
+            </snapshots>
+        </repository>
+    </repositories>
 
 
 </project>

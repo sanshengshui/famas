@@ -23,6 +23,16 @@
         <pkg.name>famas</pkg.name>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.grozacloud</groupId>
+            <artifactId>famas-common</artifactId>
+        </dependency>
+    </dependencies>
 
     <build>
         <finalName>${pkg.name}-${project.version}</finalName>

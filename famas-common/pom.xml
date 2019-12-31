@@ -16,16 +16,6 @@
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
-    <dependencies>
-        <dependency>
-            <groupId>com.alipay.sofa.common</groupId>
-            <artifactId>sofa-common-tools</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.netty</groupId>
-            <artifactId>netty-all</artifactId>
-        </dependency>
-    </dependencies>
 
 
 </project>
