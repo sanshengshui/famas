@@ -33,6 +33,10 @@
             <artifactId>famas-mqtt</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.grozacloud</groupId>
+            <artifactId>famas-coap</artifactId>
+        </dependency>
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
         </dependency>

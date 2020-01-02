@@ -30,6 +30,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <netty.version>4.1.43.Final</netty.version>
+        <californium.version>1.0.2</californium.version>
         <slf4j.version>1.7.7</slf4j.version>
         <logback.version>1.2.3</logback.version>
         <junit.version>4.11</junit.version>
@@ -54,6 +55,11 @@
             </dependency>
             <dependency>
                 <groupId>com.grozacloud</groupId>
+                <artifactId>famas-coap</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.grozacloud</groupId>
                 <artifactId>famas-core</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -61,6 +67,11 @@
                 <groupId>io.netty</groupId>
                 <artifactId>netty-all</artifactId>
                 <version>${netty.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.eclipse.californium</groupId>
+                <artifactId>californium-core</artifactId>
+                <version>${californium.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>

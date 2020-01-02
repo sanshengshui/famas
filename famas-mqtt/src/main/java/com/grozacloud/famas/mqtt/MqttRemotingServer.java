@@ -3,6 +3,7 @@ package com.grozacloud.famas.mqtt;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
+import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
@@ -40,6 +41,8 @@ public class MqttRemotingServer {
     private Integer workerGroupThreadCount;
     @Value("${mqtt.netty.max_payload_size}")
     private Integer maxPayloadSize;
+    @Value("${mqtt.netty.so_keep_alive}")
+    private boolean keepAlive;
 
     private Channel serverChannel;
     private EventLoopGroup bossGroup;
@@ -57,6 +60,7 @@ public class MqttRemotingServer {
         ServerBootstrap b = new ServerBootstrap();
         b.group(bossGroup, workerGroup)
                 .channel(NioServerSocketChannel.class)
+                .childOption(ChannelOption.SO_KEEPALIVE, keepAlive)
                 .childHandler(new MqttRemotingServerInitializer(maxPayloadSize));
         serverChannel = b.bind(host, port).sync().channel();
         log.info("MQTT server started!");

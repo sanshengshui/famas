@@ -10,3 +10,13 @@ mqtt:
     boss_group_thread_count: 1
     worker_group_thread_count: 8
     max_payload_size: 65536
+    so_keep_alive: false
+
+# CoAP server parameters
+coap:
+  # Enable/disable coap transport protocol.
+  enabled: true
+  bind_address: 0.0.0.0
+  bind_port: 5683
+  adaptor: JsonCoapAdaptor
+  timeout: 10000
