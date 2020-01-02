@@ -7,6 +7,7 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.util.ResourceLeakDetector;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ import javax.annotation.PreDestroy;
  */
 @Service
 @ConditionalOnProperty(prefix = "mqtt", value = "enabled", havingValue = "true", matchIfMissing = false)
+@Slf4j
 public class MqttRemotingServer {
 
     private static final String V1 = "v1";
@@ -45,10 +47,11 @@ public class MqttRemotingServer {
 
     @PostConstruct
     public void init() throws Exception {
+        log.info("Setting resource leak detector level to {}", leakDetectorLevel);
         ResourceLeakDetector.setLevel(ResourceLeakDetector.Level.valueOf(leakDetectorLevel.toUpperCase()));
 
+        log.info("Starting MQTT server...");
         bossGroup = new NioEventLoopGroup(bossGroupThreadCount);
-
         workerGroup = new NioEventLoopGroup(workerGroupThreadCount);
 
         ServerBootstrap b = new ServerBootstrap();
@@ -56,15 +59,18 @@ public class MqttRemotingServer {
                 .channel(NioServerSocketChannel.class)
                 .childHandler(new MqttRemotingServerInitializer(maxPayloadSize));
         serverChannel = b.bind(host, port).sync().channel();
+        log.info("MQTT server started!");
     }
 
     @PreDestroy
     public void shutdown() throws Exception {
+        log.info("Stopping MQTT server!");
         try {
             serverChannel.close().sync();
         } finally {
             workerGroup.shutdownGracefully();
             bossGroup.shutdownGracefully();
         }
+        log.info("MQTT server stopped!");
     }
 }
