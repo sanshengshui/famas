@@ -23,6 +23,10 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.grozacloud</groupId>
+            <artifactId>famas-common</artifactId>
+        </dependency>
+        <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-all</artifactId>
         </dependency>

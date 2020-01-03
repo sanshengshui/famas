@@ -38,6 +38,7 @@
         <guava.version>23.0</guava.version>
         <spring.version>5.0.9.RELEASE</spring.version>
         <lombok.version>1.16.18</lombok.version>
+        <bouncycastle.version>1.56</bouncycastle.version>
     </properties>
 
 
@@ -133,6 +134,16 @@
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>${lombok.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.bouncycastle</groupId>
+                <artifactId>bcprov-jdk15on</artifactId>
+                <version>${bouncycastle.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.bouncycastle</groupId>
+                <artifactId>bcpkix-jdk15on</artifactId>
+                <version>${bouncycastle.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
