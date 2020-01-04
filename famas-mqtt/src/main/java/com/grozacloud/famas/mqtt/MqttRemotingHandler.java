@@ -47,6 +47,7 @@ public class MqttRemotingHandler extends ChannelInboundHandlerAdapter
         }
         switch (msg.fixedHeader().messageType()) {
             case CONNECT:
+                processConnect(ctx, (MqttConnectMessage) msg);
                 break;
             case PUBLISH:
                 break;
@@ -55,8 +56,14 @@ public class MqttRemotingHandler extends ChannelInboundHandlerAdapter
             case UNSUBSCRIBE:
                 break;
             case PINGREQ:
+                if (checkConnected(ctx)) {
+                    ctx.writeAndFlush(new MqttMessage(new MqttFixedHeader(MqttMessageType.PINGRESP, false, MqttQoS.AT_MOST_ONCE, false, 0)));
+                }
                 break;
             case DISCONNECT:
+                if (checkConnected(ctx)) {
+                    processDisconnect(ctx);
+                }
                 break;
             default:
                 break;
@@ -73,6 +80,15 @@ public class MqttRemotingHandler extends ChannelInboundHandlerAdapter
         MqttConnAckVariableHeader mqttConnAckVariableHeader =
                 new MqttConnAckVariableHeader(returnCode, true);
         return new MqttConnAckMessage(mqttFixedHeader, mqttConnAckVariableHeader);
+    }
+
+    private void processPublish(ChannelHandlerContext ctx, MqttPublishMessage mqttMsg) {
+        if (checkConnected(ctx)) {
+            return;
+        }
+        String topicName = mqttMsg.variableHeader().topicName();
+        int msgId = mqttMsg.variableHeader().messageId();
+        log.trace("Processing publish msg [{}][{}]!", topicName, msgId);
     }
 
     private void processConnect(ChannelHandlerContext ctx, MqttConnectMessage msg) {
@@ -94,6 +110,15 @@ public class MqttRemotingHandler extends ChannelInboundHandlerAdapter
         } else {
             ctx.writeAndFlush(createMqttConnAckMsg(MqttConnectReturnCode.CONNECTION_ACCEPTED));
             connected = true;
+        }
+    }
+
+    private boolean checkConnected(ChannelHandlerContext ctx) {
+        if (connected) {
+            return true;
+        } else {
+            ctx.close();
+            return false;
         }
     }
 
