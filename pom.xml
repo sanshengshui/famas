@@ -22,6 +22,7 @@
         <module>famas-common</module>
         <module>famas-core</module>
         <module>famas-example</module>
+        <module>famas-dao</module>
     </modules>
 
     <properties>
@@ -35,6 +36,8 @@
         <logback.version>1.2.3</logback.version>
         <junit.version>4.11</junit.version>
         <spring-boot.version>2.0.5.RELEASE</spring-boot.version>
+        <mysql-connector.version>5.1.48</mysql-connector.version>
+        <mybatis.version>2.1.1</mybatis.version>
         <guava.version>23.0</guava.version>
         <spring.version>5.0.9.RELEASE</spring.version>
         <lombok.version>1.16.18</lombok.version>
@@ -62,6 +65,11 @@
             <dependency>
                 <groupId>com.grozacloud</groupId>
                 <artifactId>famas-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.grozacloud</groupId>
+                <artifactId>famas-dao</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -104,6 +112,21 @@
                 <artifactId>junit</artifactId>
                 <version>${junit.version}</version>
                 <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${mybatis.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql-connector.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-jdbc</artifactId>
+                <version>${spring-boot.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
