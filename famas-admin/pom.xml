@@ -37,6 +37,10 @@
             <artifactId>famas-coap</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.grozacloud</groupId>
+            <artifactId>famas-dao</artifactId>
+        </dependency>
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
         </dependency>
