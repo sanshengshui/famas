@@ -1,6 +1,6 @@
 package com.grozacloud.famas.mqtt.util;
 
-import com.grozacloud.famas.common.EncryptionUtil;
+import com.grozacloud.famas.common.utils.EncryptionUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.Base64Utils;
 
