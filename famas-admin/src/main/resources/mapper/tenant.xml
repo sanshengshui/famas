@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.grozacloud.famas.dao.sql.tenant.TenantDao">
+
+    <insert id="insertTenant" parameterType="com.grozacloud.famas.common.data.Tenant">
+        insert into
+            tenant(id, address, email, phone, title, date_create, date_update)
+            values (#{id}, #{address}, #{email}, #{phone},#{title},now(), now());
+    </insert>
+
+</mapper>

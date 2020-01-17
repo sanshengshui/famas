@@ -21,6 +21,4 @@ public class Tenant extends BaseDO {
 
     private String address;
 
-    private String tenantId;
-
 }
