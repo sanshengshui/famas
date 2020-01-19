@@ -11,6 +11,8 @@ import org.springframework.util.StringUtils;
 
 import java.net.InetSocketAddress;
 import java.security.cert.X509Certificate;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -50,10 +52,13 @@ public class MqttRemotingHandler extends ChannelInboundHandlerAdapter
                 processConnect(ctx, (MqttConnectMessage) msg);
                 break;
             case PUBLISH:
+                processPublish(ctx, (MqttPublishMessage) msg);
                 break;
             case SUBSCRIBE:
+                processSubscribe(ctx, (MqttSubscribeMessage) msg);
                 break;
             case UNSUBSCRIBE:
+                processUnsubscribe(ctx, (MqttUnsubscribeMessage) msg);
                 break;
             case PINGREQ:
                 if (checkConnected(ctx)) {
@@ -87,8 +92,27 @@ public class MqttRemotingHandler extends ChannelInboundHandlerAdapter
             return;
         }
         String topicName = mqttMsg.variableHeader().topicName();
-        int msgId = mqttMsg.variableHeader().messageId();
+        int msgId = mqttMsg.variableHeader().packetId();
         log.trace("Processing publish msg [{}][{}]!", topicName, msgId);
+
+        if (topicName.startsWith(MqttTopics.BASE_GATEWAY_API_TOPIC)) {
+
+        } else {
+            processDevicePublish(ctx, mqttMsg, topicName, msgId);
+        }
+    }
+
+    private void processDevicePublish(ChannelHandlerContext ctx, MqttPublishMessage mqttMsg, String topicName, int msgId) {
+
+    }
+
+    private void processSubscribe(ChannelHandlerContext ctx, MqttSubscribeMessage mqttMsg) {
+        if (!checkConnected(ctx)) {
+            return;
+        }
+        log.trace("Processing subscription [{}]!", mqttMsg.variableHeader().messageId());
+        List<Integer> grantedQoSList = new ArrayList<>();
+        ctx.writeAndFlush(createSubAckMessage(mqttMsg.variableHeader().messageId(), grantedQoSList));
     }
 
     private void processConnect(ChannelHandlerContext ctx, MqttConnectMessage msg) {
@@ -111,6 +135,29 @@ public class MqttRemotingHandler extends ChannelInboundHandlerAdapter
             ctx.writeAndFlush(createMqttConnAckMsg(MqttConnectReturnCode.CONNECTION_ACCEPTED));
             connected = true;
         }
+    }
+
+    private void processUnsubscribe(ChannelHandlerContext ctx, MqttUnsubscribeMessage mqttMsg) {
+        if (!checkConnected(ctx)) {
+            return;
+        }
+        log.trace("Processing subscription [{}]!", mqttMsg.variableHeader().messageId());
+        ctx.writeAndFlush(createUnSubAckMessage(mqttMsg.variableHeader().messageId()));
+    }
+
+    private MqttMessage createUnSubAckMessage(int msgId) {
+        MqttFixedHeader mqttFixedHeader =
+                new MqttFixedHeader(MqttMessageType.UNSUBACK, false, MqttQoS.AT_LEAST_ONCE, false, 0 );
+        MqttMessageIdVariableHeader mqttMessageIdVariableHeader = MqttMessageIdVariableHeader.from(msgId);
+        return new MqttMessage(mqttFixedHeader, mqttMessageIdVariableHeader);
+    }
+
+    private static MqttSubAckMessage createSubAckMessage(Integer msgId, List<Integer> grantedQoSList) {
+        MqttFixedHeader mqttFixedHeader =
+                new MqttFixedHeader(MqttMessageType.SUBACK, false, MqttQoS.AT_LEAST_ONCE, false, 0);
+        MqttMessageIdVariableHeader mqttMessageIdVariableHeader = MqttMessageIdVariableHeader.from(msgId);
+        MqttSubAckPayload mqttSubAckPayload = new MqttSubAckPayload(grantedQoSList);
+        return new MqttSubAckMessage(mqttFixedHeader, mqttMessageIdVariableHeader, mqttSubAckPayload);
     }
 
     private boolean checkConnected(ChannelHandlerContext ctx) {
