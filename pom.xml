@@ -36,7 +36,7 @@
         <logback.version>1.2.3</logback.version>
         <junit.version>4.12</junit.version>
         <spring-boot.version>2.0.5.RELEASE</spring-boot.version>
-        <mysql-connector.version>5.1.48</mysql-connector.version>
+        <mysql-connector.version>8.0.16</mysql-connector.version>
         <mybatis.version>2.1.1</mybatis.version>
         <guava.version>23.0</guava.version>
         <spring.version>5.0.9.RELEASE</spring.version>
