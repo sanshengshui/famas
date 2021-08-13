@@ -41,7 +41,7 @@
         <guava.version>23.0</guava.version>
         <spring.version>5.0.9.RELEASE</spring.version>
         <lombok.version>1.18.10</lombok.version>
-        <bouncycastle.version>1.56</bouncycastle.version>
+        <bouncycastle.version>1.67</bouncycastle.version>
     </properties>
 
 
