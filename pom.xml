@@ -35,7 +35,7 @@
         <slf4j.version>1.7.7</slf4j.version>
         <logback.version>1.2.3</logback.version>
         <junit.version>4.12</junit.version>
-        <spring-boot.version>2.0.5.RELEASE</spring-boot.version>
+        <spring-boot.version>2.5.12</spring-boot.version>
         <mysql-connector.version>5.1.48</mysql-connector.version>
         <mybatis.version>2.1.1</mybatis.version>
         <guava.version>23.0</guava.version>
